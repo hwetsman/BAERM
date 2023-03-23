@@ -4,7 +4,7 @@ statsmodels
 python-dateutil
 scipy
 seaborn
-matplotlib
+matplotlib=3.5.1
 math
 streamlit
 plotly
