@@ -5,6 +5,5 @@ python-dateutil
 scipy
 seaborn
 matplotlib==3.5.1
-math
 streamlit
 plotly
