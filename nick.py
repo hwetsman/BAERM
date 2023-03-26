@@ -123,7 +123,7 @@ plot_df = df[(df['date'] > date_20190101) & (df['date'] < date_20240101)]
 # calculate today's baerm and display
 st.write(plot_df)
 dt.datetime.now()
-st.write(plot_df[plot_df['date'] <= dt.datetime.now()])
+st.write(plot_df[plot_df['date'] <= dt.datetime.now()].PriceUSD.tolist()[-2:])
 today_baerm = plot_df.PriceUSD.tolist()[-1]
 
 
