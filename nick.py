@@ -126,7 +126,7 @@ dt.datetime.now()
 short_list = plot_df[plot_df['date'] <= dt.datetime.now()].PriceUSD.tolist()[-2:]
 
 st.write(bool(short_list[-1]))
-if short_list[-1] == pd.notnull():
+if short_list[-1] == pd.notnull:
     today_baerm = short_list[-1]
 else:
     today_baerm = short_list[-2]
