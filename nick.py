@@ -120,7 +120,7 @@ date_20190101 = dt.datetime.strptime('2011-01-01', '%Y-%m-%d')
 date_20240101 = proj_date.strftime('%m-%d-%Y')
 plot_df = df[(df['date'] > date_20190101) & (df['date'] < date_20240101)]
 today_baerm = plot_df.PriceUSD.tolist()[-1]
-st.sidebar.write(f"Today's model value is ${today_baerm}")
+st.sidebar.write(f"Today's model value is ${round(today_baerm,2)}")
 # Calculate residuals
 residuals = plot_df['logprice'] - plot_df['YHAT']
 
