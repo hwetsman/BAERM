@@ -11,9 +11,6 @@ import matplotlib.widgets as widgets
 from matplotlib.widgets import Button
 
 from math import exp, cos, log
-# import matplotlib.pyplot as plt
-# import matplotlib.ticker as ticker
-# from matplotlib.ticker import ScalarFormatter
 from scipy import stats
 
 import streamlit as st
@@ -122,8 +119,8 @@ date_20190101 = dt.datetime.strptime('2011-01-01', '%Y-%m-%d')
 # date_20240101 = dt.datetime.strptime('2028-01-01', '%Y-%m-%d')
 date_20240101 = proj_date.strftime('%m-%d-%Y')
 plot_df = df[(df['date'] > date_20190101) & (df['date'] < date_20240101)]
-# st.write(plot_df)
-# df.to_csv('3_22_23_data.csv')
+today_baerm = plot_df.PriceUSD.tolist()[-1]
+st.sidebar.write(f"Today's model value is ${today_baerm}")
 # Calculate residuals
 residuals = plot_df['logprice'] - plot_df['YHAT']
 
