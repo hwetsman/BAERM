@@ -123,7 +123,12 @@ plot_df = df[(df['date'] > date_20190101) & (df['date'] < date_20240101)]
 # calculate today's baerm and display
 st.write(plot_df)
 dt.datetime.now()
-st.write(plot_df[plot_df['date'] <= dt.datetime.now()].PriceUSD.tolist()[-2:])
+short_list = plot_df[plot_df['date'] <= dt.datetime.now()].PriceUSD.tolist()[-2:]
+st.write(f'{if short_list[-1]}')
+if short_list[-1] == pd.nonull():
+    today_baerm = short_list[-1]
+else:
+    today_baerm = short_list[-2]
 today_baerm = plot_df.PriceUSD.tolist()[-1]
 
 
