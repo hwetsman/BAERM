@@ -125,12 +125,12 @@ st.write(plot_df)
 dt.datetime.now()
 short_list = plot_df[plot_df['date'] <= dt.datetime.now()].PriceUSD.tolist()[-2:]
 
-st.write(bool(short_list[-1]))
+st.write(short_list)
 if short_list[-1] == pd.notnull:
     today_baerm = short_list[-1]
 else:
     today_baerm = short_list[-2]
-today_baerm = plot_df.PriceUSD.tolist()[-1]
+# today_baerm = plot_df.PriceUSD.tolist()[-1]
 
 
 st.sidebar.write(f"Today's model value is ${round(today_baerm,2)}")
