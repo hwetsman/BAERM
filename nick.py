@@ -121,21 +121,15 @@ date_20240101 = proj_date.strftime('%m-%d-%Y')
 plot_df = df[(df['date'] > date_20190101) & (df['date'] < date_20240101)]
 
 # calculate today's baerm and display
-st.write(plot_df)
-dt.datetime.now()
 short_list = plot_df[plot_df['date'] <= dt.datetime.now()].PriceUSD.tolist()[-2:]
-
-st.write(short_list)
 if short_list[-1] == pd.notnull:
     today_baerm = short_list[-1]
 else:
     today_baerm = short_list[-2]
-# today_baerm = plot_df.PriceUSD.tolist()[-1]
-
-
 st.sidebar.write(f"Today's model value is ${round(today_baerm,2)}")
+
 # Calculate residuals
-residuals = plot_df['logprice'] - plot_df['YHAT']
+# residuals = plot_df['logprice'] - plot_df['YHAT']
 
 
 # prepare plotly graph
