@@ -150,8 +150,13 @@ fig.update_layout(showlegend=True, width=1100, height=700)
 
 
 st.plotly_chart(fig)
+#
+#
+#
+#
 
-
+st.sidebar.write('________')
+st.sidebar.write('Buy/Hold model calculations begin 7/9/16')
 # calculate buy/hold
 start_date = '2016-03-23'
 end_date = datetime.now().date()
@@ -160,6 +165,19 @@ end_date = datetime.now().date()
 date_range = pd.date_range(start_date, end_date, freq='D')
 
 # Create the DataFrame
-df = pd.DataFrame(date_range, columns=['Date'])
+hold_df = pd.DataFrame(date_range, columns=['date'])
+hold_df['upslope'] = 0
+build_dates = {1: ['3/23/16', '1/28/18'], 2: ['8/19/19', '8/16/21'], 3: ['1/13/23', datetime.now()]}
+for i in build_dates:
+    start_date = build_dates[i][0]
+    end_date = build_dates[i][1]
+    hold_df.loc[(hold_df['date'] >= start_date) & (hold_df['date'] <= end_date), 'upslope'] = 1
+min_date = hold_df.date.min()
+max_date = hold_df.date.max()
+# add prices
+price_df = plot_df[['date', 'PriceUSD']]
+hold_df = pd.merge(hold_df, price_df, on='date', how='left')
 
-st.write(df)
+# create daily DCA
+daily = st.sidebar.slider('$$ per day DCA', min_value=1, max_value=100, value=5)
+st.write(hold_df)
