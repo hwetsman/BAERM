@@ -22,7 +22,8 @@ st. set_page_config(layout="wide")
 st.header('(c)2020-2023 Nick Phraudsta (btconometrics/codeorange)')
 # create end date of projection
 max_projection = dt.datetime.now() + relativedelta(years=20)
-proj_date = st.sidebar.date_input('Projection to date', dt.datetime.now(), max_value=max_projection)
+proj_date = st.sidebar.date_input('Projection to date', dt.datetime.now(), max_value=max_projection,
+                                  min_value=dt.datetime.now())
 time_delta = proj_date - pd.to_datetime(dt.datetime.now()).date()
 days_to_add = time_delta.days
 
