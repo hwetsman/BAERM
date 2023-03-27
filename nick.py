@@ -121,7 +121,7 @@ date_20240101 = proj_date.strftime('%m-%d-%Y')
 plot_df = df[(df['date'] > date_20190101) & (df['date'] < date_20240101)]
 
 # calculate today's baerm and display
-short_list = plot_df[plot_df['date'] <= dt.datetime.now()].PriceUSD.tolist()[-2:]
+short_list = plot_df[plot_df['date'] <= dt.datetime.now()].eYHAT.tolist()[-2:]
 if short_list[-1] == pd.notnull:
     today_baerm = short_list[-1]
 else:
