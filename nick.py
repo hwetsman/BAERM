@@ -150,3 +150,16 @@ fig.update_layout(showlegend=True, width=1100, height=700)
 
 
 st.plotly_chart(fig)
+
+
+# calculate buy/hold
+start_date = '2016-03-23'
+end_date = datetime.now().date()
+
+# Generate the date range
+date_range = pd.date_range(start_date, end_date, freq='D')
+
+# Create the DataFrame
+df = pd.DataFrame(date_range, columns=['Date'])
+
+st.write(df)
