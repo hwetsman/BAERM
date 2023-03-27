@@ -122,13 +122,8 @@ plot_df = df[(df['date'] > date_20190101) & (df['date'] < date_20240101)]
 
 # calculate today's baerm and display
 today_baerm = plot_df[plot_df['date'] <= dt.datetime.now()].eYHAT.tolist()[-1]
-# short_list = plot_df[plot_df['date'] <= dt.datetime.now()].eYHAT.tolist()[-2:]
-# if short_list[-1] == pd.notnull:
-#     today_baerm = short_list[-1]
-# else:
-#     today_baerm = short_list[-2]
 st.sidebar.write(f"Today's model value is ${round(today_baerm,2)}")
-st.sidebar.write('amended')
+
 
 # Calculate residuals
 # residuals = plot_df['logprice'] - plot_df['YHAT']
