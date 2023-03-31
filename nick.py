@@ -154,30 +154,75 @@ st.plotly_chart(fig)
 #
 #
 #
-
-st.sidebar.write('________')
-st.sidebar.write('Buy/Hold model calculations begin 7/9/16')
-# calculate buy/hold
-start_date = '2016-03-23'
-end_date = datetime.now().date()
-
-# Generate the date range
-date_range = pd.date_range(start_date, end_date, freq='D')
-
-# Create the DataFrame
-hold_df = pd.DataFrame(date_range, columns=['date'])
-hold_df['upslope'] = 0
-build_dates = {1: ['3/23/16', '1/28/18'], 2: ['8/19/19', '8/16/21'], 3: ['1/13/23', datetime.now()]}
-for i in build_dates:
-    start_date = build_dates[i][0]
-    end_date = build_dates[i][1]
-    hold_df.loc[(hold_df['date'] >= start_date) & (hold_df['date'] <= end_date), 'upslope'] = 1
-min_date = hold_df.date.min()
-max_date = hold_df.date.max()
-# add prices
-price_df = plot_df[['date', 'PriceUSD']]
-hold_df = pd.merge(hold_df, price_df, on='date', how='left')
-
+# Uncomment below to engage DCA model
+# st.sidebar.write('________')
+# st.sidebar.write('Buy/Hold model calculations begin 7/9/16')
+# # calculate buy/hold
+# start_date = '2016-03-23'
+# end_date = datetime.now().date()
+#
+# # Generate the date range
+# date_range = pd.date_range(start_date, end_date, freq='D')
+#
+# # Create the DataFrame
+# hold_df = pd.DataFrame(date_range, columns=['date'])
+# hold_df['upslope'] = 0
+# build_dates = {1: ['3/23/16', '1/28/18'], 2: ['8/19/19', '8/16/21'], 3: ['1/13/23', datetime.now()]}
+# for i in build_dates:
+#     start_date = build_dates[i][0]
+#     end_date = build_dates[i][1]
+#     hold_df.loc[(hold_df['date'] >= start_date) & (hold_df['date'] <= end_date), 'upslope'] = 1
+# min_date = hold_df.date.min()
+# max_date = hold_df.date.max()
+# daily = st.sidebar.slider('$$ per day DCA', min_value=1, max_value=100, value=5)
+#
+# # add prices
+# price_df = plot_df[['date', 'eYHAT', 'PriceUSD']]
+# hold_df = pd.merge(hold_df, price_df, on='date', how='left')
+# # dca
+# hold_df['daily_dca'] = daily/hold_df.PriceUSD
+# st.sidebar.write(
+#     f"Total BTC buying daily is {round(hold_df.daily_dca.sum(),2)} at a cost of ${round(hold_df.shape[0]*daily,2)}")
+# # dca with model
+# st.sidebar.write('Only buy when price<model')
+# up_only = st.sidebar.radio('Buy only on upslope', ['Yes', 'No'])
+# for i, r in hold_df.iterrows():
+#     if i == 0:
+#         hold_df.loc[i, 'balance'] = daily
+#     else:
+#         hold_df.loc[i, 'balance'] = daily+hold_df.loc[i-1, 'end_balance']
+#     # calculate if deploy
+#     if up_only == 'Yes':
+#         if hold_df.loc[i, 'eYHAT'] > hold_df.loc[i, 'PriceUSD'] and hold_df.loc[i, 'upslope'] == 1:
+#             hold_df.loc[i, 'deploy'] = 1
+#         else:
+#             hold_df.loc[i, 'deploy'] = 0
+#     else:
+#         if hold_df.loc[i, 'eYHAT'] > hold_df.loc[i, 'PriceUSD']:
+#             hold_df.loc[i, 'deploy'] = 1
+#         else:
+#             hold_df.loc[i, 'deploy'] = 0
+#
+#     # calculate $ to deploy
+#     if hold_df.loc[i, 'deploy'] == 1:
+#         hold_df.loc[i, '$deploy'] = round(max(
+#             daily, hold_df.loc[i, 'balance']*((hold_df.loc[i, 'eYHAT']-hold_df.loc[i, 'PriceUSD'])/hold_df.loc[i, 'eYHAT'])), 2)
+#     else:
+#         hold_df.loc[i, '$deploy'] = round(0, 2)
+#     hold_df.loc[i, 'end_balance'] = hold_df.loc[i, 'balance']-hold_df.loc[i, '$deploy']
+#     hold_df.loc[i, 'btc_in'] = hold_df.loc[i, '$deploy']/hold_df.loc[i, 'PriceUSD']
+#     if i == 0:
+#         hold_df.loc[i, 'btc_bal'] = hold_df.loc[i, 'btc_in']
+#     else:
+#         hold_df.loc[i, 'btc_bal'] = hold_df.loc[i-1, 'btc_bal']+hold_df.loc[i, 'btc_in']
+#     hold_df.loc[i, 'worth'] = hold_df.loc[i, 'btc_bal']*hold_df.loc[i, 'PriceUSD']
+#     hold_df['total_spent'] = hold_df['$deploy'].cumsum()
+#     hold_df['loss'] = hold_df['worth'] < hold_df['total_spent']
+# total_bought = hold_df.btc_bal.max()
+# total_spent = hold_df["$deploy"].sum()
+# st.sidebar.write(f'Purchased {round(total_bought,2)}')
+# st.sidebar.write(f'For ${round(total_spent,2)}')
+# st.sidebar.write(f'Average: ${round(total_spent/total_bought,2)}')
+# st.sidebar.write(f'Days of loss: {hold_df.loss.sum()}')
+# st.write(hold_df)
 # create daily DCA
-daily = st.sidebar.slider('$$ per day DCA', min_value=1, max_value=100, value=5)
-st.write(hold_df)
