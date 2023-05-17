@@ -37,10 +37,11 @@ df['date'] = pd.to_datetime(df['time'], format='%Y-%m-%d')
 df.drop('time', axis=1, inplace=True)
 
 # Extend the range
+extend_df = pd.DataFrame({'date': pd.date_range(
+    df['date'].max() + pd.Timedelta(days=1), periods=days_to_add, freq='D')})
+df = pd.concat([df,extend_df]).reset_index(drop=True)
 # df = df.append(pd.DataFrame({'date': pd.date_range(
-#     df['date'].max() + pd.Timedelta(days=1), periods=2000, freq='D')})).reset_index(drop=True)
-df = df.append(pd.DataFrame({'date': pd.date_range(
-    df['date'].max() + pd.Timedelta(days=1), periods=days_to_add, freq='D')})).reset_index(drop=True)
+#     df['date'].max() + pd.Timedelta(days=1), periods=days_to_add, freq='D')})).reset_index(drop=True)
 
 # Replace missing blkcnt values
 df.loc[df['BlkCnt'].isnull(), 'BlkCnt'] = 6 * 24
